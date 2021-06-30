@@ -45,6 +45,9 @@ resource "opentelekomcloud_cce_node_pool_v3" "node_pool" {
   availability_zone  = each.value["availability_zone"]
   key_pair           = each.value["key_pair"]
 
+  preinstall  = try(each.value["preinstall"], null)
+  postinstall = try(each.value["postinstall"], null)
+
   scale_enable             = true
   min_node_count           = 1
   max_node_count           = 9
