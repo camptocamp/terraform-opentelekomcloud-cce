@@ -66,5 +66,8 @@ resource "opentelekomcloud_cce_node_pool_v3" "node_pool" {
 }
 
 data "opentelekomcloud_cce_node_v3" "nodes" {
+  for_each   = var.node_pools
+
   cluster_id = opentelekomcloud_cce_cluster_v3.cluster.id
+  name       = each.key
 }
