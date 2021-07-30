@@ -64,3 +64,7 @@ resource "opentelekomcloud_cce_node_pool_v3" "node_pool" {
     volumetype = "SSD"
   }
 }
+
+data "opentelekomcloud_cce_node_v3" "nodes" {
+  cluster_id = opentelekomcloud_cce_cluster_v3.cluster.id
+}
