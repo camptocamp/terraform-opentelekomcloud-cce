@@ -11,7 +11,6 @@ output "cluster_id" {
 
 output "node_ips" {
   description = "nodes public IPs"
-  #  value       = data.opentelekomcloud_cce_node_v3.node.*.public_ip
   value = [
     for node in data.opentelekomcloud_cce_node_v3.node :
     node.public_ip
