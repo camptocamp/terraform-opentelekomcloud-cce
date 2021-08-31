@@ -4,14 +4,14 @@ kind: Config
 apiVersion: v1
 clusters:
   - cluster:
-      server: ${opentelekomcloud_cce_cluster_v3.cluster.internal}
-      certificate-authority-data: ${opentelekomcloud_cce_cluster_v3.cluster.certificate_clusters.0.certificate_authority_data}
+      server: ${opentelekomcloud_cce_cluster_v3.this.internal}
+      certificate-authority-data: ${opentelekomcloud_cce_cluster_v3.this.certificate_clusters.0.certificate_authority_data}
     name: internalCluster
 users:
   - name: user
     user:
-      client-certificate-data: ${opentelekomcloud_cce_cluster_v3.cluster.certificate_users.0.client_certificate_data}
-      client-key-data: ${opentelekomcloud_cce_cluster_v3.cluster.certificate_users.0.client_key_data}
+      client-certificate-data: ${opentelekomcloud_cce_cluster_v3.this.certificate_users.0.client_certificate_data}
+      client-key-data: ${opentelekomcloud_cce_cluster_v3.this.certificate_users.0.client_key_data}
 contexts:
   - name: internal
     context:
@@ -21,7 +21,7 @@ current-context: internal
 EOT
 }
 
-resource "opentelekomcloud_cce_cluster_v3" "cluster" {
+resource "opentelekomcloud_cce_cluster_v3" "this" {
   name = var.cluster_name
 
   cluster_version        = var.cluster_version
@@ -34,10 +34,10 @@ resource "opentelekomcloud_cce_cluster_v3" "cluster" {
   multi_az               = var.multi_az
 }
 
-resource "opentelekomcloud_cce_node_pool_v3" "node_pool" {
+resource "opentelekomcloud_cce_node_pool_v3" "this" {
   for_each = var.node_pools
 
-  cluster_id         = opentelekomcloud_cce_cluster_v3.cluster.id
+  cluster_id         = opentelekomcloud_cce_cluster_v3.this.id
   name               = each.key
   os                 = "EulerOS 2.5"
   flavor             = each.value["flavor"]
