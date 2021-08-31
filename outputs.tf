@@ -6,13 +6,10 @@ output "kubeconfig" {
 
 output "cluster_id" {
   description = "this cluster id"
-  value       = opentelekomcloud_cce_cluster_v3.cluster.id
+  value       = opentelekomcloud_cce_cluster_v3.this.id
 }
 
 output "node_ips" {
   description = "nodes public IPs"
-  value = [
-    for node in data.opentelekomcloud_cce_node_v3.node :
-    node.public_ip
-  ]
+  value       = data.opentelekomcloud_cce_node_v3.this.*.public_ip
 }

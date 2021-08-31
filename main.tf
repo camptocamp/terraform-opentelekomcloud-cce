@@ -65,12 +65,12 @@ resource "opentelekomcloud_cce_node_pool_v3" "node_pool" {
   }
 }
 
-data "opentelekomcloud_cce_node_ids_v3" "node_ids" {
+data "opentelekomcloud_cce_node_ids_v3" "this" {
   cluster_id = opentelekomcloud_cce_cluster_v3.cluster.id
 }
 
-data "opentelekomcloud_cce_node_v3" "node" {
-  for_each = data.opentelekomcloud_cce_node_ids_v3.node_ids.ids
+data "opentelekomcloud_cce_node_v3" "this" {
+  for_each = data.opentelekomcloud_cce_node_ids_v3.this.ids
 
   cluster_id = opentelekomcloud_cce_cluster_v3.cluster.id
   node_id    = each.value
